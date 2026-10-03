@@ -1,0 +1,89 @@
+# ------------------------------
+# OS / Editor
+# ------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.log
+
+.vscode/
+.idea/
+.vs/
+
+# ------------------------------
+# Angular / Node
+# ------------------------------
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+
+.angular/
+.angular/cache/
+
+# Build outputs
+/dist/
+/tmp/
+/out-tsc/
+
+# Test / coverage
+/coverage/
+.nyc_output/
+
+# Environment files (keep examples if needed)
+.env
+.env.*
+!.env.example
+
+# Angular CLI cache (older/newer patterns)
+.cache/
+
+# ------------------------------
+# .NET / C#
+# ------------------------------
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+.nuget/packages/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]enchmark[Dd]ot[Nn]et.Artifacts/
+
+# ASP.NET / publish
+wwwroot/
+*.Publish.xml
+pubxml/
+
+# EF Core / local DB files
+*.mdf
+*.ldf
+
+# Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# ------------------------------
+# Repo-specific generated folders
+# ------------------------------
+api/**/bin/
+api/**/obj/
+ui/node_modules/
+ui/dist/

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Abacush.Api/Abacush.Api.csproj" />
+  <Project Path="Abacush.Application/Abacush.Application.csproj" />
+  <Project Path="Abacush.Domain/Abacush.Domain.csproj" />
+  <Project Path="Abacush.Infrastructure/Abacush.Infrastructure.csproj" />
+  <Project Path="Abacush.Tests/Abacush.Tests.csproj" />
+</Solution>
