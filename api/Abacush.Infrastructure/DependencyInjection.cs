@@ -12,8 +12,11 @@ public static class DependencyInjection
     {
         services.AddDbContext<AbacushDbContext>(options =>
         {
-            var databaseName = configuration.GetValue<string>("Database:Name") ?? "AbacushDb";
-            options.UseInMemoryDatabase(databaseName);
+            var connectionString = configuration.GetConnectionString("Abacush")
+                ?? throw new InvalidOperationException(
+                    $"Connection string Abacush was not found.");
+
+            options.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IUnitOfWork, Abacush.Infrastructure.UnitOfWork.UnitOfWork>();

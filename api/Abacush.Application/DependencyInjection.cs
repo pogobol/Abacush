@@ -15,8 +15,6 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
-        services.AddSingleton<IClock, SystemClock>();
-
         return services;
     }
 }
