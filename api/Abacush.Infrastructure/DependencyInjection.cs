@@ -1,5 +1,6 @@
 using Abacush.Domain.Interfaces;
 using Abacush.Infrastructure.Persistence;
+using Abacush.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,10 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString);
         });
 
+        services.AddScoped<IObjectTypeRepository, ObjectTypeRepository>();
+        services.AddScoped<IQualifiedSubjectRepository, QualifiedSubjectRepository>();
+        services.AddScoped<IQualifiedObjectRepository, QualifiedObjectRepository>();
+        services.AddScoped<IPermissionRepository, PermissionRepository>();
         services.AddScoped<IUnitOfWork, Abacush.Infrastructure.UnitOfWork.UnitOfWork>();
 
         return services;
