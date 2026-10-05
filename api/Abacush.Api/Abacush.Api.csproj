@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Abacush.Infrastructure\Abacush.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

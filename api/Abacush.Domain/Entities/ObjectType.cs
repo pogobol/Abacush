@@ -2,6 +2,6 @@
 {
     public class ObjectType : BaseEntity
     {
-        public required string Interface { get; init; }
+        public required string Interface { get; set; }
     }
 }
