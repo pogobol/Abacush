@@ -37,7 +37,17 @@ public static class DependencyInjection
         {
             options.AddPolicy("AbacushCors", policy =>
             {
-                policy.AllowAnyOrigin()
+                var allowedOrigins = configuration
+                    .GetSection("Cors:AllowedOrigins")
+                    .Get<string[]>()
+                    ?? Array.Empty<string>();
+
+                if (allowedOrigins.Length == 0)
+                {
+                    throw new InvalidOperationException("Cors:AllowedOrigins must contain at least one origin.");
+                }
+
+                policy.WithOrigins(allowedOrigins)
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
@@ -58,7 +68,7 @@ public static class DependencyInjection
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = "Auth0Selector";
-            options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
         .AddPolicyScheme("Auth0Selector", "Auth0 authentication selector", options =>
         {

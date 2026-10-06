@@ -1,2 +1,38 @@
-<app-nx-welcome></app-nx-welcome>
+<main class="shell">
+	<section class="panel">
+		<h1>{{ title }}</h1>
+		<p>Auth0 authentication status and protected API test.</p>
+
+		<div class="actions">
+			<button type="button" (click)="login()">Log in</button>
+			<button type="button" (click)="logout()">Log out</button>
+			<button type="button" (click)="callProtectedApi()">Call /api/auth/me</button>
+		</div>
+
+		@if (isAuthenticated$ | async) {
+			<p class="status status-authenticated">Authenticated</p>
+		} @else {
+			<p class="status status-anonymous">Anonymous</p>
+		}
+
+		@if (user$ | async; as user) {
+			<div class="card">
+				<h2>User Profile</h2>
+				<pre>{{ user | json }}</pre>
+			</div>
+		}
+
+		@if (apiResponse) {
+			<div class="card">
+				<h2>Protected API Response</h2>
+				<pre>{{ apiResponse | json }}</pre>
+			</div>
+		}
+
+		@if (apiError) {
+			<p class="status status-error">{{ apiError }}</p>
+		}
+	</section>
+</main>
+
 <router-outlet></router-outlet>

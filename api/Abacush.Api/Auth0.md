@@ -1,32 +1,47 @@
 # Auth0 setup
 
-The API supports both Auth0 access-token validation and browser login sessions.
+The API validates Auth0 access tokens and the UI authenticates users with Auth0 SPA login.
 
 ## Auth0 dashboard
 
 1. Create an Auth0 API and set its Identifier to the value used as `Auth0:Audience`.
-2. Create a regular web application for the OpenID Connect login flow.
-3. Set the application callback URL to `https://localhost:7096/signin-oidc` (or the HTTPS URL used by the API).
-4. Set the application logout URL to `https://localhost:7096/`.
-5. Allow the API origin used by the frontend in Auth0 application settings.
-
-The exact local HTTPS port is shown by the ASP.NET Core launch profile or Visual Studio. Update the callback and logout URLs to match it.
+2. Create an Auth0 Single Page Application for the Angular UI.
+3. Add UI callback URLs:
+	- `http://localhost:4200`
+4. Add UI logout URLs:
+	- `http://localhost:4200`
+5. Add UI web origins:
+	- `http://localhost:4200`
+6. If using API interactive login endpoints (`/api/auth/login`), also create a regular web application and set:
+	- Callback URL: `http://localhost:5096/signin-oidc`
+	- Logout URL: `http://localhost:5096/`
 
 ## Local development
 
-From the repository root, configure User Secrets without committing the values:
+### API values (User Secrets)
+
+From the repository root, configure API values without committing secrets:
 
 ```powershell
 dotnet user-secrets init --project api/Abacush.Api/Abacush.Api.csproj
 dotnet user-secrets set "Auth0:Domain" "your-tenant.us.auth0.com" --project api/Abacush.Api/Abacush.Api.csproj
 dotnet user-secrets set "Auth0:Audience" "https://your-api-identifier" --project api/Abacush.Api/Abacush.Api.csproj
-dotnet user-secrets set "Auth0:ClientId" "your-client-id" --project api/Abacush.Api/Abacush.Api.csproj
-dotnet user-secrets set "Auth0:ClientSecret" "your-client-secret" --project api/Abacush.Api/Abacush.Api.csproj
+dotnet user-secrets set "Auth0:ClientId" "your-regular-webapp-client-id" --project api/Abacush.Api/Abacush.Api.csproj
+dotnet user-secrets set "Auth0:ClientSecret" "your-regular-webapp-client-secret" --project api/Abacush.Api/Abacush.Api.csproj
 ```
+
+### UI values
+
+Set SPA values in `ui/apps/abacush/src/environments/environment.ts`:
+
+- `auth0.domain`
+- `auth0.clientId` (SPA client id)
+- `auth0.audience` (same API identifier)
+- `apiBaseUrl` (`http://localhost:5096` by default)
 
 ## Deployment
 
-Set these environment variables in the deployment environment:
+Set these API environment variables in deployment:
 
 - `Auth0__Domain`
 - `Auth0__Audience`
@@ -34,13 +49,12 @@ Set these environment variables in the deployment environment:
 - `Auth0__ClientSecret`
 - `Auth0__Scope` (optional; defaults to `openid profile email`)
 
-Do not commit client secrets or production credentials to `appsettings.json`.
+Do not commit production credentials.
 
-## Endpoints
+## Endpoints and behavior
 
-- `GET /api/auth/login` starts the Auth0 browser login flow.
 - `GET /api/auth/me` returns the authenticated user's claims.
-- `GET /api/auth/logout` clears the local session and starts Auth0 logout.
-- API calls can authenticate with `Authorization: Bearer <Auth0 access token>`.
+- API calls authenticate with `Authorization: Bearer <Auth0 access token>`.
+- `GET /api/auth/login` and `GET /api/auth/logout` are available for API-hosted interactive login flow.
 
-Because authorization uses a fallback policy, controllers and actions are protected by default. Use `[AllowAnonymous]` explicitly for public endpoints.
+Authorization uses a fallback policy, so controllers and actions are protected by default. Use `[AllowAnonymous]` explicitly for public endpoints.
