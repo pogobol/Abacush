@@ -1,0 +1,32 @@
+<main class="grid min-h-screen bg-white dark:bg-slate-800 lg:grid-cols-2">
+  <section class="hidden items-center justify-center bg-indigo-50 dark:bg-indigo-500/10 lg:flex">
+    <div class="max-w-md px-8 text-center">
+      <img src="logo.svg" alt="" class="mx-auto h-20 w-20" />
+      <h2 class="mt-8 text-2xl font-semibold text-slate-800 dark:text-slate-100">Manage everything in one place</h2>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Track clients, projects and revenue from a single dashboard.</p>
+    </div>
+  </section>
+
+  <section class="flex items-center justify-center p-6">
+    <div class="w-full max-w-sm">
+      <div class="mb-8 flex items-center gap-2">
+        <img src="logo.svg" alt="" class="h-9 w-9" />
+        <span class="text-2xl font-semibold text-slate-800 dark:text-slate-100">Abacush</span>
+      </div>
+
+      <h1 class="text-xl font-semibold text-slate-800 dark:text-slate-100">Welcome to Abacush</h1>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Sign in to access your dashboard.</p>
+
+      <form class="mt-6" (submit)="$event.preventDefault(); login()">
+        <button
+          type="submit"
+          class="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        >
+          Sign in with Auth0
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-xs text-slate-400">Secure sign-in powered by Auth0</p>
+    </div>
+  </section>
+</main>

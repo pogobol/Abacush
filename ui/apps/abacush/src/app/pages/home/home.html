@@ -1,0 +1,185 @@
+<div class="min-h-screen bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300">
+  <header class="sticky top-0 z-10 bg-white dark:bg-slate-800 shadow-sm">
+    <div class="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-3">
+      <div class="flex items-center gap-8">
+        <div class="flex items-center gap-2">
+          <img src="logo.svg" alt="" class="h-9 w-9" />
+          <span class="text-xl font-semibold text-slate-800 dark:text-slate-100">Abacush</span>
+        </div>
+        <nav class="hidden items-center gap-1 lg:flex">
+          @for (item of navItems; track item; let first = $first) {
+            <a
+              href="#"
+              class="rounded-lg px-3 py-2 text-sm font-medium"
+              [class]="first ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'"
+            >
+              {{ item }}
+            </a>
+          }
+        </nav>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          type="button"
+          class="flex h-9 w-9 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700"
+          [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+          (click)="theme.toggle()"
+        >
+          @if (theme.isDark()) {
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+          } @else {
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          }
+        </button>
+        @if (user$ | async; as user) {
+          <div class="relative">
+            <button
+              type="button"
+              class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-indigo-100 ring-2 ring-transparent hover:ring-indigo-300 dark:bg-indigo-500/20"
+              aria-label="Open user menu"
+              aria-haspopup="true"
+              [attr.aria-expanded]="menuOpen()"
+              (click)="menuOpen.set(!menuOpen())"
+            >
+              @if (user.picture) {
+                <img [src]="user.picture" alt="" class="h-full w-full object-cover" referrerpolicy="no-referrer" />
+              } @else {
+                <svg class="h-6 w-6 text-indigo-500" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0z" /></svg>
+              }
+            </button>
+
+            @if (menuOpen()) {
+              <div class="fixed inset-0 z-20" (click)="menuOpen.set(false)"></div>
+              <div class="absolute right-0 z-30 mt-3 w-80 rounded-xl bg-white p-6 shadow-xl ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700">
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">User Profile</h3>
+                <div class="mt-4 flex items-center gap-4 border-b border-slate-200 pb-4 dark:border-slate-700">
+                  <div class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-indigo-100 dark:bg-indigo-500/20">
+                    @if (user.picture) {
+                      <img [src]="user.picture" alt="" class="h-full w-full object-cover" referrerpolicy="no-referrer" />
+                    } @else {
+                      <svg class="h-9 w-9 text-indigo-500" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0z" /></svg>
+                    }
+                  </div>
+                  <div class="min-w-0">
+                    <p class="truncate font-semibold text-slate-800 dark:text-slate-100">{{ user.name ?? user.email }}</p>
+                    @if (user.email) {
+                      <p class="truncate text-sm text-slate-500 dark:text-slate-400">{{ user.email }}</p>
+                    }
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="mt-4 w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+                  (click)="logout()"
+                >
+                  Log out
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1400px] space-y-6 p-6">
+    <section class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
+      @for (tile of tiles; track tile.label) {
+        <div class="rounded-xl p-5 text-center" [class]="tile.bg">
+          <p class="text-sm font-medium" [class]="tile.text">{{ tile.label }}</p>
+          <p class="mt-2 text-2xl font-semibold" [class]="tile.text">{{ tile.value }}</p>
+        </div>
+      }
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-3">
+      <div class="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm lg:col-span-2">
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Revenue Updates</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Overview of Profit</p>
+          </div>
+          <span class="rounded-lg border border-slate-200 px-3 py-1 text-sm">Year 2025</span>
+        </div>
+        <div class="mt-6 grid gap-6 md:grid-cols-4">
+          <div class="space-y-4">
+            <div>
+              <p class="text-2xl font-semibold text-slate-800 dark:text-slate-100">$48,820</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Earnings this month</p>
+            </div>
+            <div>
+              <p class="text-2xl font-semibold text-slate-800 dark:text-slate-100">$26,498</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Expense this month</p>
+            </div>
+          </div>
+          <div class="flex h-48 items-end gap-3 md:col-span-3">
+            @for (m of months; track m.name) {
+              <div class="flex flex-1 flex-col items-center gap-2">
+                <div class="w-full rounded-t-md bg-indigo-500" [style.height.%]="m.value"></div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{{ m.name }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+          <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Yearly Breakup</h2>
+          <p class="mt-3 text-2xl font-semibold text-slate-800 dark:text-slate-100">$36,358</p>
+          <p class="text-sm text-emerald-600">+9% last year</p>
+        </div>
+        <div class="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+          <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Monthly Earnings</h2>
+          <p class="mt-3 text-2xl font-semibold text-slate-800 dark:text-slate-100">$6,820</p>
+          <p class="text-sm text-emerald-600">+9% last year</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-3">
+      <div class="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+        <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Best Selling Products</h2>
+        <ul class="mt-4 divide-y divide-slate-100 dark:divide-slate-700">
+          @for (p of products; track p.name) {
+            <li class="flex items-center justify-between py-3 text-sm">
+              <span class="font-medium text-slate-800 dark:text-slate-100">{{ p.name }}</span>
+              <span>{{ p.amount }} <span class="ml-1 text-indigo-600">{{ p.share }}</span></span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm lg:col-span-2">
+        <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Top Performers</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Best employees</p>
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="text-xs uppercase text-slate-400">
+              <tr>
+                <th class="py-2">Assigned</th>
+                <th class="py-2">Project</th>
+                <th class="py-2">Budget</th>
+                <th class="py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+              @for (t of performers; track t.name) {
+                <tr>
+                  <td class="py-3 font-medium text-slate-800 dark:text-slate-100">{{ t.name }}</td>
+                  <td class="py-3">{{ t.project }}</td>
+                  <td class="py-3">{{ t.budget }}</td>
+                  <td class="py-3">
+                    <span class="rounded-full px-2.5 py-0.5 text-xs font-medium" [class]="statusClass(t.status)">
+                      {{ t.status }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
