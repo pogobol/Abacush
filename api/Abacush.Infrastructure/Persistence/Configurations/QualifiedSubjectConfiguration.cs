@@ -20,7 +20,7 @@ internal sealed class QualifiedSubjectConfiguration : IEntityTypeConfiguration<Q
 
         builder.Property(entity => entity.Interface)
             .IsRequired()
-            .HasMaxLength(2000);
+            .HasColumnType("nvarchar(max)");
 
         builder.Property(entity => entity.Attributes)
             .HasConversion(JsonValueConverters.DictionaryConverter)

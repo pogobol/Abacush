@@ -9,7 +9,7 @@ BEGIN
 		[Id] uniqueidentifier NOT NULL,
 		[Name] nvarchar(200) NOT NULL,
 		[Description] nvarchar(1000) NULL,
-		[Interface] nvarchar(2000) NOT NULL,
+		[Interface] nvarchar(max) NOT NULL,
 		CONSTRAINT [PK_ObjectTypes] PRIMARY KEY ([Id])
 	);
 END;
@@ -21,7 +21,7 @@ BEGIN
 		[Id] uniqueidentifier NOT NULL,
 		[Name] nvarchar(200) NOT NULL,
 		[Description] nvarchar(1000) NULL,
-		[Interface] nvarchar(2000) NOT NULL,
+		[Interface] nvarchar(max) NOT NULL,
 		[Attributes] nvarchar(max) NOT NULL,
 		CONSTRAINT [PK_QualifiedSubjects] PRIMARY KEY ([Id])
 	);
