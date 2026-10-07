@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
-import { ThemeService } from '../../theme.service';
+import { AuthSessionService } from '../../services/auth-session.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   imports: [AsyncPipe],
@@ -9,10 +9,10 @@ import { ThemeService } from '../../theme.service';
   templateUrl: './home.html',
 })
 export class Home {
-  private readonly auth = inject(AuthService);
+  private readonly session = inject(AuthSessionService);
   protected readonly theme = inject(ThemeService);
 
-  protected readonly user$ = this.auth.user$;
+  protected readonly user$ = this.session.user$;
   protected readonly menuOpen = signal(false);
 
   protected readonly navItems = ['Dashboard', 'Apps', 'Pages', 'Customers', 'Reports', 'Settings'];
@@ -60,6 +60,6 @@ export class Home {
   }
 
   protected logout(): void {
-    this.auth.logout({ logoutParams: { returnTo: window.location.origin + '/login' } });
+    this.session.logout();
   }
 }

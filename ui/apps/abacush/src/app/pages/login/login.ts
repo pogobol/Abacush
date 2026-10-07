@@ -1,20 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
-import { environment } from '../../../environments/environment';
+import { AuthSessionService } from '../../services/auth-session.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
 })
 export class Login {
-  private readonly auth = inject(AuthService);
+  private readonly session = inject(AuthSessionService);
 
   protected login(): void {
-    this.auth.loginWithRedirect({
-      authorizationParams: {
-        audience: environment.auth0.audience,
-        scope: environment.auth0.scope,
-      },
-    });
+    this.session.login();
   }
 }
