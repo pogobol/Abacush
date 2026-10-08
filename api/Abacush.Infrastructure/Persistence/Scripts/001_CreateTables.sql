@@ -2,15 +2,15 @@ SET XACT_ABORT ON;
 
 BEGIN TRANSACTION;
 
-IF OBJECT_ID(N'[ObjectTypes]', N'U') IS NULL
+IF OBJECT_ID(N'[QualifiedTypes]', N'U') IS NULL
 BEGIN
-	CREATE TABLE [ObjectTypes]
+	CREATE TABLE [QualifiedTypes]
 	(
 		[Id] uniqueidentifier NOT NULL,
 		[Name] nvarchar(200) NOT NULL,
 		[Description] nvarchar(1000) NULL,
 		[Interface] nvarchar(max) NOT NULL,
-		CONSTRAINT [PK_ObjectTypes] PRIMARY KEY ([Id])
+		CONSTRAINT [PK_QualifiedTypes] PRIMARY KEY ([Id])
 	);
 END;
 
@@ -37,8 +37,8 @@ BEGIN
 		[Attributes] nvarchar(max) NOT NULL,
 		[TypeId] uniqueidentifier NOT NULL,
 		CONSTRAINT [PK_QualifiedObjects] PRIMARY KEY ([Id]),
-		CONSTRAINT [FK_QualifiedObjects_ObjectTypes_TypeId]
-			FOREIGN KEY ([TypeId]) REFERENCES [ObjectTypes] ([Id]) ON DELETE NO ACTION
+		CONSTRAINT [FK_QualifiedObjects_QualifiedTypes_TypeId]
+			FOREIGN KEY ([TypeId]) REFERENCES [QualifiedTypes] ([Id]) ON DELETE NO ACTION
 	);
 END;
 

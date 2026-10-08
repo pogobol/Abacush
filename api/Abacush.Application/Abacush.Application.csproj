@@ -9,20 +9,11 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
-    <PackageReference Include="MediatR" Version="14.2.0" />
+    <PackageReference Include="WolverineFx" Version="6.48.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Abacush.Domain\Abacush.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Services\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
 </Project>

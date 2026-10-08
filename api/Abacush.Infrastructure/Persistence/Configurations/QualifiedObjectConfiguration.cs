@@ -22,8 +22,12 @@ internal sealed class QualifiedObjectConfiguration : IEntityTypeConfiguration<Qu
             .HasConversion(JsonValueConverters.DictionaryConverter)
             .Metadata.SetValueComparer(JsonValueConverters.DictionaryComparer);
 
+        builder.Property(entity => entity.TypeId)
+            .IsRequired();
+
         builder.HasOne(entity => entity.Type)
             .WithMany()
+            .HasForeignKey(entity => entity.TypeId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
     }

@@ -7,20 +7,20 @@ public sealed class UnitOfWork : IUnitOfWork
 {
     private readonly AbacushDbContext _dbContext;
 
-    public IObjectTypeRepository ObjectTypes { get; }
+    public IQualifiedTypeRepository QualifiedTypes { get; }
     public IQualifiedSubjectRepository QualifiedSubjects { get; }
     public IQualifiedObjectRepository QualifiedObjects { get; }
     public IPermissionRepository Permissions { get; }
 
     public UnitOfWork(
         AbacushDbContext dbContext,
-        IObjectTypeRepository objectTypes,
+        IQualifiedTypeRepository qualifiedTypes,
         IQualifiedSubjectRepository qualifiedSubjects,
         IQualifiedObjectRepository qualifiedObjects,
         IPermissionRepository permissions)
     {
         _dbContext = dbContext;
-        ObjectTypes = objectTypes;
+        QualifiedTypes = qualifiedTypes;
         QualifiedSubjects = qualifiedSubjects;
         QualifiedObjects = qualifiedObjects;
         Permissions = permissions;

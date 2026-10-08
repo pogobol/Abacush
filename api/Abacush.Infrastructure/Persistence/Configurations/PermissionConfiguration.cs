@@ -13,6 +13,7 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
 
         builder.HasOne(entity => entity.Object)
             .WithMany()
+            .HasForeignKey(entity => entity.ObjectId)
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
